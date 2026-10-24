@@ -1,0 +1,32 @@
+# Implementation Plan – To-Do List Life Dashboard
+
+- [x] 1. Set up project structure
+  - Create `index.html`, `css/style.css`, `js/app.js`
+  - Add steering file with project constraints
+- [x] 2. Build page layout and theme
+  - [x] 2.1 Responsive card grid and top bar
+  - [x] 2.2 Light/dark theme tokens and toggle saved to Local Storage
+- [x] 3. Greeting
+  - [x] 3.1 Live clock and date, updated every second
+  - [x] 3.2 Greeting based on time of day
+  - [x] 3.3 Editable custom name saved to Local Storage
+- [x] 4. Focus timer
+  - [x] 4.1 25-minute countdown with Start / Stop / Reset
+  - [x] 4.2 Circular progress ring and status chip
+  - [x] 4.3 Adjustable session length (1–120 min) saved to Local Storage
+  - [x] 4.4 Chime when the session ends
+- [x] 5. To-do list
+  - [x] 5.1 Add, edit, mark done, delete
+  - [x] 5.2 Save and load tasks from Local Storage
+  - [x] 5.3 Prevent duplicate tasks
+  - [x] 5.4 Sort tasks (newest, oldest, A→Z, unfinished first)
+  - [x] 5.5 Progress bar, counter and "Clear completed"
+- [x] 6. Quick links
+  - [x] 6.1 Link tiles that open in a new tab
+  - [x] 6.2 Add / remove links, saved to Local Storage
+- [x] 7. Polish and check
+  - [x] 7.1 Mobile layout, keyboard focus styles, reduced motion
+  - [x] 7.2 Manual check in the browser
+- [ ] 8. Publish
+  - [ ] 8.1 Push to GitHub with GitHub Desktop
+  - [ ] 8.2 Enable GitHub Pages and submit links

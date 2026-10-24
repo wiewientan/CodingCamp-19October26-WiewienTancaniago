@@ -380,6 +380,10 @@ button {
   display: none;
 }
 
+:root[data-theme="light"] .icon-moon {
+  display: none;
+}
+
 :root[data-theme="dark"] .icon-sun {
   display: none;
 }
