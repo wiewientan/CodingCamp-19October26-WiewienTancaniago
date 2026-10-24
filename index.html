@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A simple life dashboard: clock, focus timer, to-do list and quick links.">
+  <title>Life Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true">
+    <span class="blob blob-1"></span>
+    <span class="blob blob-2"></span>
+    <span class="blob blob-3"></span>
+  </div>
+
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Life Dashboard</span>
+      </div>
+      <button id="themeToggle" class="icon-btn" type="button" aria-label="Toggle light and dark mode" title="Toggle theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg>
+      </button>
+    </header>
+
+    <main class="grid">
+      <!-- Greeting -->
+      <section class="card hero" aria-labelledby="greetingText">
+        <p class="eyebrow" id="date">&nbsp;</p>
+        <p class="clock" id="clock" aria-live="off"><span id="clockMain">00:00</span><span class="clock-sec" id="clockSec">:00</span></p>
+        <h1 class="greeting">
+          <span id="greetingText">Hello</span>,
+          <button id="nameBtn" class="name-btn" type="button" title="Click to change your name"></button>
+          <form id="nameForm" class="name-form" hidden>
+            <label class="sr-only" for="nameInput">Your name</label>
+            <input id="nameInput" type="text" maxlength="24" placeholder="Your name" autocomplete="given-name">
+          </form>
+        </h1>
+        <p class="summary" id="summary"></p>
+      </section>
+
+      <!-- Focus Timer -->
+      <section class="card timer" aria-labelledby="timerTitle">
+        <div class="card-head">
+          <h2 id="timerTitle">Focus</h2>
+          <span class="chip" id="timerState">Ready</span>
+        </div>
+
+        <div class="ring-wrap">
+          <svg class="ring" viewBox="0 0 220 220" aria-hidden="true">
+            <defs>
+              <linearGradient id="ringGradient" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="var(--accent)"/>
+                <stop offset="100%" stop-color="var(--accent-2)"/>
+              </linearGradient>
+            </defs>
+            <circle class="ring-track" cx="110" cy="110" r="96"/>
+            <circle class="ring-progress" id="ringProgress" cx="110" cy="110" r="96"/>
+          </svg>
+          <div class="ring-label">
+            <span class="timer-time" id="timerTime" role="timer" aria-live="off">25:00</span>
+            <span class="timer-caption" id="timerCaption">25 min session</span>
+          </div>
+        </div>
+
+        <div class="timer-controls">
+          <button id="timerStart" class="btn btn-primary" type="button">Start</button>
+          <button id="timerStop" class="btn btn-soft" type="button" disabled>Stop</button>
+          <button id="timerReset" class="btn btn-soft" type="button">Reset</button>
+        </div>
+
+        <div class="duration" role="group" aria-label="Session length">
+          <span class="duration-label">Session length</span>
+          <div class="stepper">
+            <button id="durationDown" class="stepper-btn" type="button" aria-label="Decrease by 5 minutes">&minus;</button>
+            <label class="sr-only" for="durationInput">Minutes</label>
+            <input id="durationInput" type="number" min="1" max="120" step="1" inputmode="numeric">
+            <span class="stepper-unit">min</span>
+            <button id="durationUp" class="stepper-btn" type="button" aria-label="Increase by 5 minutes">+</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- To-Do List -->
+      <section class="card todos" aria-labelledby="todoTitle">
+        <div class="card-head">
+          <div>
+            <h2 id="todoTitle">To-Do</h2>
+            <p class="muted small" id="todoCount">No tasks yet</p>
+          </div>
+          <div class="sort">
+            <label for="sortSelect" class="muted small">Sort</label>
+            <select id="sortSelect">
+              <option value="newest">Newest first</option>
+              <option value="oldest">Oldest first</option>
+              <option value="az">A &rarr; Z</option>
+              <option value="pending">Unfinished first</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="progress" aria-hidden="true"><span id="todoProgress"></span></div>
+
+        <form id="todoForm" class="todo-form" autocomplete="off">
+          <label class="sr-only" for="todoInput">New task</label>
+          <input id="todoInput" type="text" maxlength="120" placeholder="What do you want to get done?">
+          <button class="btn btn-primary" type="submit">Add</button>
+        </form>
+        <p class="form-error" id="todoError" role="alert"></p>
+
+        <ul class="todo-list" id="todoList"></ul>
+        <div class="empty" id="todoEmpty">
+          <p>Nothing here yet.</p>
+          <p class="muted small">Add your first task above and it will be saved in this browser.</p>
+        </div>
+
+        <div class="todo-footer" id="todoFooter">
+          <button id="clearDone" class="link-btn" type="button">Clear completed</button>
+        </div>
+      </section>
+
+      <!-- Quick Links -->
+      <section class="card links" aria-labelledby="linksTitle">
+        <div class="card-head">
+          <h2 id="linksTitle">Quick Links</h2>
+          <button id="linkAddToggle" class="btn btn-soft btn-sm" type="button" aria-expanded="false" aria-controls="linkForm">+ Add</button>
+        </div>
+
+        <form id="linkForm" class="link-form" hidden autocomplete="off">
+          <label class="sr-only" for="linkName">Link name</label>
+          <input id="linkName" type="text" maxlength="24" placeholder="Name (e.g. GitHub)">
+          <label class="sr-only" for="linkUrl">Link URL</label>
+          <input id="linkUrl" type="text" placeholder="github.com">
+          <div class="link-form-actions">
+            <button class="btn btn-soft btn-sm" type="button" id="linkCancel">Cancel</button>
+            <button class="btn btn-primary btn-sm" type="submit">Save link</button>
+          </div>
+          <p class="form-error" id="linkError" role="alert"></p>
+        </form>
+
+        <ul class="link-grid" id="linkList"></ul>
+        <p class="empty small muted" id="linkEmpty">No links yet. Add the sites you visit every day.</p>
+      </section>
+    </main>
+
+    <footer class="footer">Your data stays in this browser &middot; HTML, CSS &amp; vanilla JavaScript</footer>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
